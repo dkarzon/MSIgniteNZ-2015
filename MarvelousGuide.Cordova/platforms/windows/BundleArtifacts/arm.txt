@@ -1,0 +1,2 @@
+MainPackage=G:\Work\DKDevelopment\MarvelousGuide\MarvelousGuide.Cordova\MarvelousGuide.Cordova\platforms\windows\build\phone\debug\arm\CordovaApp.Phone_1.0.0.0_arm_debug.appx
+ResourcePack=G:\Work\DKDevelopment\MarvelousGuide\MarvelousGuide.Cordova\MarvelousGuide.Cordova\platforms\windows\build\phone\debug\arm\CordovaApp.Phone_1.0.0.0_scale-100.appx

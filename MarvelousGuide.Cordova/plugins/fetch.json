@@ -1,0 +1,26 @@
+{
+    "org.apache.cordova.inappbrowser": {
+        "source": {
+            "type": "registry",
+            "id": "org.apache.cordova.inappbrowser"
+        }
+    },
+    "org.apache.cordova.statusbar": {
+        "source": {
+            "type": "registry",
+            "id": "org.apache.cordova.statusbar"
+        }
+    },
+    "org.apache.cordova.console": {
+        "source": {
+            "type": "registry",
+            "id": "org.apache.cordova.console"
+        }
+    },
+    "cc.fovea.cordova.purchase": {
+        "source": {
+            "type": "local",
+            "path": "G:\\Work\\Github\\cordova-plugin-purchase"
+        }
+    }
+}
