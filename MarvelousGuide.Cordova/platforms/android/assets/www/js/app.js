@@ -155,7 +155,12 @@ angular.module('marvelous.controllers', ['marvelous.services', 'ngCordova'])
     };
 
     $scope.extractIdFromUrl = function (url) {
-        return url.substring(url.lastIndexOf('/') + 1);
+        try{
+            return url.substring(url.lastIndexOf('/') + 1);
+        }
+        catch(ex) {
+            return null;
+        }
     };
 
 });

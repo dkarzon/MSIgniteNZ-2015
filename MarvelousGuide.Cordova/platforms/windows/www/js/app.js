@@ -56,11 +56,12 @@ angular.module('marvelous', ['ionic', 'marvelous.services', 'marvelous.controlle
         }
     })
 
-    .state('app.stories', {
-        url: '/stories',
+    .state('app.camera', {
+        url: '/camera',
         views: {
             'menuContent': {
-                templateUrl: 'templates/stories.html'
+                templateUrl: 'templates/camera.html',
+                controller: 'CameraCtrl'
             }
         }
     })
@@ -97,7 +98,7 @@ angular.module('marvelous', ['ionic', 'marvelous.services', 'marvelous.controlle
 
 angular.module('marvelous.services', []);
 
-angular.module('marvelous.controllers', ['marvelous.services'])
+angular.module('marvelous.controllers', ['marvelous.services', 'ngCordova'])
 .controller('AppCtrl', function ($scope, $rootScope, $ionicModal, $timeout) {
 
     // With the new view caching in Ionic, Controllers are only called
@@ -154,7 +155,12 @@ angular.module('marvelous.controllers', ['marvelous.services'])
     };
 
     $scope.extractIdFromUrl = function (url) {
-        return url.substring(url.lastIndexOf('/') + 1);
+        try{
+            return url.substring(url.lastIndexOf('/') + 1);
+        }
+        catch(ex) {
+            return null;
+        }
     };
 
 });

@@ -16,14 +16,14 @@
             for (var i = 0; i < response.data.results.length; i++) {
                 $scope.characters.push(response.data.results[i]);
             }
-            if (response.data.offset + response.data.limit < Math.min(response.data.total, 600)) {
+            if (response.data.offset + response.data.limit < Math.min(response.data.total, 400)) {
                 getCharacters(response.data.offset + response.data.limit, limit);
             }
             else {
                 $loadingService.hide();
             }
         })
-        .error(function () {
+        .error(function (e) {
             $loadingService.showError();
         });
     };
