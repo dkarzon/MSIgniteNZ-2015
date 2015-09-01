@@ -23,7 +23,7 @@ angular.module('marvelous.controllers')
                 $loadingService.hide();
             }
         })
-        .error(function () {
+        .error(function (e) {
             $loadingService.showError();
         });
     };

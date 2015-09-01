@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -8,14 +9,12 @@
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
     <link href="css/marvelous.css" rel="stylesheet">
     <link href="css/platform.css" rel="stylesheet">
-    
-    <!-- cordova script (this will be a 404 during development) -->
-    <script src="cordova.js"></script>
 
     <script src="js/platform.js"></script>
     
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <script src="lib/ngCordova/ng-cordova.js"></script>
     <script src="js/md5.js"></script>
     
     <!-- your app's js -->
@@ -24,8 +23,12 @@
     <script src="js/controllers/character.js"></script>
     <script src="js/controllers/donate.js"></script>
     <script src="js/controllers/comic.js"></script>
+    <script src="js/controllers/camera.js"></script>
     <script src="js/services/apiservice.js"></script>
     <script src="js/services/loadingService.js"></script>
+    
+    <!-- cordova script (this will be a 404 during development) -->
+    <script src="cordova.js"></script>
 </head>
 <body ng-app="marvelous">
     <ion-nav-view></ion-nav-view>
