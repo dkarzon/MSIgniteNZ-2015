@@ -20,7 +20,9 @@
 var Q     = require('Q'),
     path  = require('path'),
     exec  = require('./exec'),
-    spawn  = require('./spawn');
+    shell = require('shelljs'),
+    spawn  = require('./spawn'),
+    Version = require('./Version');
 
 function MSBuildTools (version, path) {
     this.version = version;
@@ -34,8 +36,7 @@ MSBuildTools.prototype.buildProject = function(projFile, buildType, buildarch) {
 
     var args = ['/clp:NoSummary;NoItemAndPropertyList;Verbosity=minimal', '/nologo',
     '/p:Configuration=' + buildType,
-    '/p:Platform=' + buildarch,
-    '/p:BuildFromCordovaTooling=' + true];
+    '/p:Platform=' + buildarch];
 
     return spawn(path.join(this.path, 'msbuild'), [projFile].concat(args));
 };
@@ -69,3 +70,31 @@ function checkMSBuildVersion(version) {
     });
     return deferred.promise;
 }
+
+function getProgramFiles32Folder() {
+    /* jshint ignore:start */ /* Wants to use dot syntax for ProgramFiles, leaving as-is for consistency */
+    return process.env['ProgramFiles(x86)'] || process.env['ProgramFiles'];
+    /* jshint ignore:end */
+}
+
+/// returns an array of available UAP Versions
+function getAvailableUAPVersions() {
+    var uapFolderPath = path.join(getProgramFiles32Folder(), 'Windows Kits', '10', 'Platforms', 'UAP');
+    if (!shell.test('-e', uapFolderPath)) {
+        return []; // No UAP SDK exists on this machine
+    }
+
+    var result = [];
+    shell.ls(uapFolderPath).filter(function(uapDir) {
+        return shell.test('-d', path.join(uapFolderPath, uapDir));
+    }).map(function(folder) {
+        return Version.tryParse(folder);
+    }).forEach(function(version, index) {
+        if (version) {
+            result.push(version);
+        }
+    });
+
+    return result;
+}
+module.exports.getAvailableUAPVersions = getAvailableUAPVersions;

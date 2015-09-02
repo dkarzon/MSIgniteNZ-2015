@@ -1,5 +1,5 @@
 ﻿// Platform: windows
-// fc4db9145934bd0053161cbf9ffc0caf83b770c6
+// 796a18d425a03101a1a931c54cd8ea002230067c
 /*
  Licensed to the Apache Software Foundation (ASF) under one
  or more contributor license agreements.  See the NOTICE file
@@ -19,7 +19,7 @@
  under the License.
 */
 ;(function() {
-var PLATFORM_VERSION_BUILD_LABEL = '3.8.0';
+var PLATFORM_VERSION_BUILD_LABEL = '4.0.0';
 // file: src/scripts/require.js
 
 /*jshint -W079 */
@@ -101,9 +101,14 @@ if (typeof module === "object" && typeof require === "function") {
 // file: src/cordova.js
 define("cordova", function(require, exports, module) {
 
+if(window.cordova){
+    throw new Error("cordova already defined");
+}
+
 
 var channel = require('cordova/channel');
 var platform = require('cordova/platform');
+
 
 /**
  * Intercept calls to addEventListener + removeEventListener and handle deviceready,
@@ -811,7 +816,7 @@ module.exports = channel;
 
 });
 
-// file: src/windows/exec.js
+// file: node_modules/cordova-windows/cordova-js-src/exec.js
 define("cordova/exec", function(require, exports, module) {
 
 /*jslint sloppy:true, plusplus:true*/
@@ -855,18 +860,40 @@ module.exports = function (success, fail, service, action, args) {
             // CB-5806 [Windows8] Add keepCallback support to proxy
             onSuccess = function (result, callbackOptions) {
                 callbackOptions = callbackOptions || {};
+                var callbackStatus;
+                // covering both undefined and null.
+                // strict null comparison was causing callbackStatus to be undefined
+                // and then no callback was called because of the check in cordova.callbackFromNative
+                // see CB-8996 Mobilespec app hang on windows
+                if (callbackOptions.status !== undefined && callbackOptions.status !== null) {
+                    callbackStatus = callbackOptions.status;
+                }
+                else {
+                    callbackStatus = cordova.callbackStatus.OK;
+                }
                 cordova.callbackSuccess(callbackOptions.callbackId || callbackId,
                     {
-                        status: callbackOptions.status || cordova.callbackStatus.OK,
+                        status: callbackStatus,
                         message: result,
                         keepCallback: callbackOptions.keepCallback || false
                     });
             };
             onError = function (err, callbackOptions) {
                 callbackOptions = callbackOptions || {};
+                var callbackStatus;
+                // covering both undefined and null.
+                // strict null comparison was causing callbackStatus to be undefined
+                // and then no callback was called because of the check in cordova.callbackFromNative
+                // see CB-8996 Mobilespec app hang on windows
+                if (callbackOptions.status !== undefined && callbackOptions.status !== null) {
+                    callbackStatus = callbackOptions.status;
+                }
+                else {
+                    callbackStatus = cordova.callbackStatus.OK;
+                }
                 cordova.callbackError(callbackOptions.callbackId || callbackId,
                     {
-                        status: callbackOptions.status || cordova.callbackStatus.ERROR,
+                        status: callbackStatus,
                         message: err,
                         keepCallback: callbackOptions.keepCallback || false
                     });
@@ -882,6 +909,7 @@ module.exports = function (success, fail, service, action, args) {
         }
     }
 };
+
 });
 
 // file: src/common/exec/proxy.js
@@ -1255,7 +1283,7 @@ exports.reset();
 
 });
 
-// file: src/windows/platform.js
+// file: node_modules/cordova-windows/cordova-js-src/platform.js
 define("cordova/platform", function(require, exports, module) {
 
 module.exports = {
@@ -1289,7 +1317,10 @@ module.exports = {
         if (!window.WinJS) {
             var scriptElem = document.createElement("script");
 
-            if (navigator.appVersion.indexOf("Windows Phone 8.1;") !== -1) {
+            if (navigator.appVersion.indexOf('MSAppHost/3.0') !== -1) {
+                // Windows 10 UWP
+                scriptElem.src = '/WinJS/js/base.js';
+            } else if (navigator.appVersion.indexOf("Windows Phone 8.1;") !== -1) {
                 // windows phone 8.1 + Mobile IE 11
                 scriptElem.src = "//Microsoft.Phone.WinJS.2.1/js/base.js";
             } else if (navigator.appVersion.indexOf("MSAppHost/2.0;") !== -1) {

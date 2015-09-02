@@ -50,26 +50,18 @@
     <PropertyGroup>
         <TargetPlatformIdentifier>Windows</TargetPlatformIdentifier>
         <TargetPlatformVersion>8.0</TargetPlatformVersion>
-        <DefaultLanguage>en-US</DefaultLanguage>
-        <PackageCertificateKeyFile>CordovaApp_TemporaryKey.pfx</PackageCertificateKeyFile>
     </PropertyGroup>
     <ItemGroup>
         <AppxManifest Include="package.windows80.appxmanifest">
             <SubType>Designer</SubType>
         </AppxManifest>
         <Content Exclude="images\*.scale-240.*" Include="images\*.png" />
-        <None Include="CordovaApp_TemporaryKey.pfx" />
     </ItemGroup>
     <ItemGroup>
         <SDKReference Include="Microsoft.WinJS.1.0, Version=1.0" />
     </ItemGroup>
     <Import Label="Shared" Project="CordovaApp.projitems" />
     <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\$(WMSJSProjectDirectory)\Microsoft.VisualStudio.$(WMSJSProject).targets" />
-    <PropertyGroup>
-        <BuildFromCordovaTooling>false</BuildFromCordovaTooling>
-    </PropertyGroup>
-    <PropertyGroup>
-    </PropertyGroup>
     <PropertyGroup>
         <PreBuildEvent>
       cd /d $(MSBuildThisFileDirectory)
