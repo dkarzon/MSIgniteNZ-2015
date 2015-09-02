@@ -1,8 +1,20 @@
 # MSIgniteNZ-2015
 Code and slides from the Ignite NZ 2015 talk on Cordova
 
+This is a sample Cordova app built to demo Cordova development with Visual Studio 2015.
+It uses data from the Marvel API http://developer.marvel.com/docs and some cordova plugins (referrenced below).
 
-Helpful links:
+### Setup
+* Install Visual Studio 2015 with the cross platform cordova tools (custom installation option)
+* Open the solution file
+* F5
+* ????
+* Profit
+
+
+
+
+### Helpful links:
 * Ionic framework: http://ionicframework.com/
 * Vorlon.js: http://vorlonjs.com/
 * In App Purchase Plugin: https://github.com/j3k0/cordova-plugin-purchase
